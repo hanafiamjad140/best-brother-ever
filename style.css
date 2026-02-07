@@ -1,0 +1,96 @@
+:root {
+    --primary-color: #FFD700; /* Gold */
+    --secondary-color: #ff6b6b; /* Reddish */
+    --success-color: #4ecdc4; /* Tealish Green */
+    --bg-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    --font-heading: 'Bangers', cursive;
+    --font-body: 'Comic Neue', cursive;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-gradient);
+    font-family: var(--font-body);
+    overflow: hidden; /* Prevent scrollbars when button grows huge */
+}
+
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border: 5px solid #fff;
+    max-width: 90%;
+}
+
+h1 {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: #333;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    letter-spacing: 2px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* allow wrapping if it gets too crazy, though we want overlap */
+    position: relative; /* For absolute positioning tricks if needed, but flex is safer for basic layout */
+    min-height: 100px;
+    align-items: center;
+}
+
+button {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+}
+
+button:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+
+#yes-btn {
+    background-color: var(--success-color);
+    color: white;
+    z-index: 10; /* Ensure YES stays on top */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+#no-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+#success-box {
+    animation: popIn 0.5s ease;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
