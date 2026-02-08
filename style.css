@@ -1,10 +1,11 @@
 :root {
-    --primary-color: #FFD700; /* Gold */
-    --secondary-color: #ff6b6b; /* Reddish */
-    --success-color: #4ecdc4; /* Tealish Green */
-    --bg-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-    --font-heading: 'Bangers', cursive;
-    --font-body: 'Comic Neue', cursive;
+    --primary-color: #ff6b6b;
+    --secondary-color: #4ecdc4;
+    --accent-color: #ffe66d;
+    --text-color: #2d3436;
+    --glass-bg: rgba(255, 255, 255, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 body {
@@ -14,74 +15,117 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--bg-gradient);
-    font-family: var(--font-body);
-    overflow: hidden; /* Prevent scrollbars when button grows huge */
+    font-family: 'Nunito', sans-serif;
+    overflow: hidden;
+    background-color: #1a1a2e; /* Fallback */
 }
 
-.container {
+#bg-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.glass-container {
     text-align: center;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 3rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    border: 5px solid #fff;
+    border: 1px solid var(--glass-border);
+    padding: 3rem;
+    box-shadow: var(--glass-shadow);
     max-width: 90%;
+    width: 500px;
+    position: relative;
+    z-index: 10;
 }
 
 h1 {
-    font-family: var(--font-heading);
-    font-size: 4rem;
-    color: #333;
+    font-family: 'Fredoka One', cursive;
+    font-size: 3rem;
+    color: #fff;
     margin-bottom: 2rem;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
 }
 
 .buttons {
     display: flex;
     justify-content: center;
     gap: 20px;
-    flex-wrap: wrap; /* allow wrapping if it gets too crazy, though we want overlap */
-    position: relative; /* For absolute positioning tricks if needed, but flex is safer for basic layout */
-    min-height: 100px;
-    align-items: center;
+    position: relative;
+    min-height: 80px; /* Space for buttons */
 }
 
 button {
-    font-family: var(--font-heading);
-    font-size: 2rem;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
     padding: 15px 40px;
     border: none;
-    border-radius: 15px;
+    border-radius: 50px; /* Pill shape */
     cursor: pointer;
-    transition: transform 0.1s;
-    box-shadow: 0 5px 0 rgba(0,0,0,0.2);
-}
-
-button:active {
-    transform: translateY(4px);
-    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 #yes-btn {
-    background-color: var(--success-color);
-    color: white;
-    z-index: 10; /* Ensure YES stays on top */
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    background: linear-gradient(135deg, #4ecdc4 0%, #556270 100%);
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    color: #1a1a2e;
+}
+
+#yes-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
 }
 
 #no-btn {
-    background-color: var(--secondary-color);
-    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    position: absolute; /* crucial for movement */
+    /* Starting position relative to .buttons container */
+    right: 20%; 
 }
+
+/* Initially, Yes is on the left, No on the right via flex gap... 
+   Wait, if No is absolute, it leaves the flow. 
+   Let's keep Yes in flow and No absolute? 
+   Or just absolute both? 
+   Let's try standard flow first then switch No to absolute via JS on hover?
+   Actually, easiest is:
+*/
+.buttons {
+    /* Clear justification for absolute positioning strategy if needed */
+    height: 100px; /* reduced from min-height */
+    align-items: center;
+}
+
+#yes-btn {
+    position: relative; /* Keep in flow */
+    z-index: 2;
+}
+
+#no-btn {
+    position: absolute;
+    right: 50px; /* Initial vague position */
+    transition: all 0.1s ease-out; /* Fast movement */
+}
+
 
 .hidden {
     display: none;
 }
 
 #success-box {
-    animation: popIn 0.5s ease;
+    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 @keyframes popIn {
@@ -92,5 +136,10 @@ button:active {
 
 p {
     font-size: 1.5rem;
+    color: #fff;
     font-weight: bold;
+}
+
+.gif-container {
+    margin-top: 20px;
 }
